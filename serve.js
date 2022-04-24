@@ -3,6 +3,8 @@ const mysql = require('mysql')
 const myCom = require('express-myconnection')
 const app = express();
 const router = require('./router')
+const cors = require ('cors')
+
 
 const dbConfig = {
     host: 'localhost',
@@ -15,13 +17,14 @@ const dbConfig = {
 
 app.use(myCom(mysql , dbConfig, 'single'))
 app.use(express.json())
+app.use(cors())
 
  app.use('/' ,router)
 
 
 
 
- app.listen(8000, () => {
-   console.log('Server is running on port 3000');
+ app.listen(9000, () => {
+   console.log('Server is running on port 9000');
  });
 

@@ -49,6 +49,23 @@ router.get('/api', (req, res) => {
   })
     });
 
+    router.delete('/api:id', (req, res) => {
+        req.getConnection((erro, connt)=>{
+            if(erro) console.log(erro)
+
+            connt.query('DELETE FROM list_user WHERE id = ?' ,[req.body.id], (erro, resultado)=>{
+                if(erro){
+                    res.status(500).send('Error al ejecutar la consulta')
+                }else{
+                    res.status(200).json(resultado)
+                }
+            })
+    
+    
+            
+      })
+        });
+
 
 module.exports  = router
 
