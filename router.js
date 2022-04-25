@@ -3,7 +3,10 @@ const router = express.Router()
 
 
 //routes
-router.get('/api', (req, res) => {
+
+
+
+router.get('/', (req, res) => {
     req.getConnection((erro, connt)=>{
         if(erro){
             res.status(500).send('Erro na conexão com o banco de dados')
@@ -21,19 +24,9 @@ router.get('/api', (req, res) => {
     })
   });
 
-  router.get('/home', (req, res) => {
-    req.getConnection((erro, connt)=>{
-        if(erro){
-            res.status(500).send('Erro na conexão com o banco de dados')
-        }else{
-          res.status(200).send('Bienvenido a la pagina de inicio')
-        }
 
 
-    })
-  });
-
-  router.post('/api', (req, res) => {
+  router.post('/', (req, res) => {
     req.getConnection((erro, connt)=>{
         if(erro) console.log(erro)
 
@@ -49,15 +42,15 @@ router.get('/api', (req, res) => {
   })
     });
 
-    router.delete('/api:id', (req, res) => {
+    router.delete('/:id', (req, res) => {
         req.getConnection((erro, connt)=>{
-            if(erro) console.log(erro)
+            if(erro) return console.log("erro en la conecion ")
 
-            connt.query('DELETE FROM list_user WHERE id = ?' ,[req.body.id], (erro, resultado)=>{
+            connt.query('DELETE FROM list_user WHERE id_user = ?' ,[req.params.id], (erro, resultado)=>{
                 if(erro){
                     res.status(500).send('Error al ejecutar la consulta')
                 }else{
-                    res.status(200).json(resultado)
+                    res.status(200).json("resultado")
                 }
             })
     
@@ -65,6 +58,27 @@ router.get('/api', (req, res) => {
             
       })
         });
+
+        router.put('/:id', (req, res) => {
+            req.getConnection((erro, connt)=>{
+                if(erro) return console.log("erro en la conecion ")
+
+                connt.query('UPDATE list_user SET ? WHERE id_user = ?' ,[req.body, req.body.id], (erro, resultado)=>{
+                    if(erro){
+                        res.status(500).send('Error al ejecutar la consulta')
+                    }else{
+                        res.status(200).json("actualisado")
+                    }
+                })
+        
+        
+                
+        
+        
+                
+          })
+            });
+    
 
 
 module.exports  = router
